@@ -67,7 +67,7 @@ namespace Exercicio_Document
             // ---------------- 2º EXERCÍCIO         
             try
             {
-                //Criação da pasta
+                //Criação da pasta csv
                 Directory.CreateDirectory(@"c:\tmp\csv");
 
                 string[] prod = new string[8];
@@ -96,26 +96,45 @@ namespace Exercicio_Document
                     }
                 }
 
+                Console.WriteLine();
 
+                //Faz a leitura e mostra o contéudo do arquivo ItensVendidos.csv
+                StreamReader leitura = new StreamReader(@"c:\tmp\csv\ItensVendidos.csv");
+                string mostrar = leitura.ReadLine();
+                while(mostrar != null)
+                {
+                    Console.WriteLine(mostrar);
+                    mostrar = leitura.ReadLine();
+                }
 
+                leitura.Close();
+                Console.WriteLine();
 
+                // Criação da pasta destino
+                Directory.CreateDirectory(@"c:\tmp\destino");
 
+                using (StreamWriter escritorArquivo = File.AppendText(@"c:\tmp\destino\Resumo.csv"))
+                {
+                    foreach (var item in prod)
+                    {
+                        string[] campos = item.Split(',');
+                        string nome = campos[0];
+                        double preco = double.Parse(campos[1], CultureInfo.InvariantCulture);
+                        int quantidade = int.Parse(campos[2]);
 
+                        Produto produtos = new Produto(nome, preco, quantidade);
 
-
-
+                        escritorArquivo.WriteLine(produtos.Nome + ", " + produtos.Totalizar().ToString("F2"), CultureInfo.InvariantCulture);
+                    }
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine("Ocorreu um erro!\n\r" + e.Message);
             }
 
-            //escritorArquivo.WriteLine(produtos.Nome + ", " + produtos.Totalizar().ToString("F2"), CultureInfo.InvariantCulture);
-
-
             Console.WriteLine("------------------------------------------------");
 
-            // ---------------- 3º EXERCÍCIO
 
         }
     }

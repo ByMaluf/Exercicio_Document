@@ -6,7 +6,7 @@ namespace Exercicio_Document
     {
         static void Main(string[] args)
         { 
-            // ---------------- 1º EXERCÍCIO 
+            // ---------------- 1º EXERCÍCIO - 1ªOPÇÃO
 
             /*
              
@@ -34,7 +34,7 @@ namespace Exercicio_Document
             Console.WriteLine("------------------------------------------------");
 
 
-            // ---------------- 1º EXERCÍCIO
+            // ---------------- 1º EXERCÍCIO - 2ªOPÇÃO
 
             /*
             Console.WriteLine("Informe o nome do arquivo ou sua extenção: ");
@@ -75,7 +75,7 @@ namespace Exercicio_Document
                 for (int i = 0; i < 8; i++)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Informações do produto: (Nome) (Preço) (Quantidade):");
+                    Console.Write("Informações do produto: (Nome) (Preço) (Quantidade): ");
                     prod[i] = Console.ReadLine();
                 }
                 
@@ -99,6 +99,8 @@ namespace Exercicio_Document
                 Console.WriteLine();
 
                 //Faz a leitura e mostra o contéudo do arquivo ItensVendidos.csv
+                Console.WriteLine(" -- Itens Listados -- ");
+                Console.WriteLine();
                 StreamReader leitura = new StreamReader(@"c:\tmp\csv\ItensVendidos.csv");
                 string mostrar = leitura.ReadLine();
                 while(mostrar != null)
@@ -113,6 +115,8 @@ namespace Exercicio_Document
                 // Criação da pasta destino
                 Directory.CreateDirectory(@"c:\tmp\destino");
 
+                //Gravação das informações dos produtos dentro do arquivo Resumo.csv
+                //Somente o nome do produto e o cálculo de método totalizar
                 using (StreamWriter escritorArquivo = File.AppendText(@"c:\tmp\destino\Resumo.csv"))
                 {
                     foreach (var item in prod)
@@ -127,6 +131,21 @@ namespace Exercicio_Document
                         escritorArquivo.WriteLine(produtos.Nome + ", " + produtos.Totalizar().ToString("F2"), CultureInfo.InvariantCulture);
                     }
                 }
+
+                //Faz a leitura e mostra o contéudo do arquivo ItensVendidos.csv
+                Console.WriteLine(" -- Itens Listados (Resumo Cálculado) -- ");
+                Console.WriteLine();
+                StreamReader leitura1 = new StreamReader(@"c:\tmp\destino\Resumo.csv");
+                string mostrar1 = leitura1.ReadLine();
+                while (mostrar1 != null)
+                {
+                    Console.WriteLine(mostrar1);
+                    mostrar1 = leitura1.ReadLine();
+                }
+
+                leitura1.Close();
+                Console.WriteLine();
+
             }
             catch (Exception e)
             {
@@ -134,7 +153,7 @@ namespace Exercicio_Document
             }
 
             Console.WriteLine("------------------------------------------------");
-
+            
 
         }
     }
